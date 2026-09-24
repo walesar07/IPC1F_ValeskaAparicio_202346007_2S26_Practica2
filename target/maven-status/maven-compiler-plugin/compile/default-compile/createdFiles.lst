@@ -1,6 +1,13 @@
-com\mycompany\practica2\views\MenuPrincipal.class
 com\mycompany\practica2\views\VentanaCrearPiloto.class
-com\mycompany\practica2\controllers\RegistroPilotos.class
+com\mycompany\practica2\controllers\ControlTeclado.class
+com\mycompany\practica2\views\VentanaJuego.class
+com\mycompany\practica2\views\MenuPrincipal.class
 com\mycompany\practica2\models\NivelDificultad.class
+com\mycompany\practica2\views\PanelJuego.class
+com\mycompany\practica2\controllers\HiloMovimientoJugador.class
+com\mycompany\practica2\controllers\RegistroPilotos.class
 com\mycompany\practica2\Practica2.class
+com\mycompany\practica2\models\NaveJugador.class
+com\mycompany\practica2\models\Movil.class
+com\mycompany\practica2\views\VentanaJuego$1.class
 com\mycompany\practica2\models\Piloto.class

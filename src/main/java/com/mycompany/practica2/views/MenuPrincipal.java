@@ -2,6 +2,7 @@
 package com.mycompany.practica2.views;
 
 import com.mycompany.practica2.controllers.RegistroPilotos;
+import com.mycompany.practica2.models.Piloto;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,8 +40,17 @@ public class MenuPrincipal extends JFrame {
         
         //eventos de los botones
         btnJugar.addActionListener(e-> {
-            JOptionPane.showMessageDialog(this,"Aun no hay pilotos i antalla de juego.\n"+ 
-                    "Esto se implementa en las siguientes fases.");
+            Piloto[] pilotos = registroPilotos.getPilotos();
+            if (pilotos.length == 0){
+                JOptionPane.showMessageDialog(this,"Primero debes "
+                        + "crear un piloto", "Sin pilotos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            //por ahora usamos el primer piloto registrado; en una fase 
+            //posterior agregaremos un selector si hay varios.
+            Piloto pilotoSeleccionado = pilotos[0];
+            VentanaJuego ventanaJuego = new VentanaJuego(pilotoSeleccionado);
+            ventanaJuego.setVisible(true);
         });
         
          btnCrearPiloto.addActionListener(e -> {
