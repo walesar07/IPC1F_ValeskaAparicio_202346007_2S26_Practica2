@@ -41,6 +41,10 @@ public class HiloMovimientoJugador extends Thread {
     }
     
     private void actualizarPosicion(){
+        if(nave.estaBloqueada()){
+            return;//mientras esta bloqueada, no responde al teclado
+        }
+        
         int velocidad = nave.getVelocidad();
         int nuevoX = nave.getX();
         int nuevoY = nave.getY();
@@ -62,3 +66,4 @@ public class HiloMovimientoJugador extends Thread {
     
     
 }
+

@@ -1,16 +1,14 @@
 
 package com.mycompany.practica2.controllers;
 
-import com.mycompany.practica2.models.Enemigo;
-import com.mycompany.practica2.models.Escena;
-import com.mycompany.practica2.models.Movil;
-import com.mycompany.practica2.models.NaveJugador;
-
+import com.mycompany.practica2.models.*;
 
 public class Arbitro extends Thread {
     
     private static final int INTERVALO_MS = 20;
-    private static final int PUNTOS_POR_ENEMIGO = 5;
+    private static final int MS_BLOQUEO_ASTEROIDE = 2000;
+    private static final int PUNTOS_QUAFFLE = 10;
+    private static final int PUNTOS_SNITCH = 150;
     
     private final Escena escena;
     private final NaveJugador jugador;
@@ -51,19 +49,37 @@ public class Arbitro extends Thread {
         }
     }
     
-    /*define que pasa cuando el jugador choca contra un movil.
-    por ahora solo manejamos enemigo; en la siguiente fase agregaremos 
+    /*define que pasa cuando el jugador choca contra un movil, enemigo,
     asteroide(bludger), Quaffle y Snitch con sus propias reglas.
     */
     private void resolver(Movil movil){
         if (movil instanceof Enemigo){
                 movil.matar();
-                puntaje += PUNTOS_POR_ENEMIGO;
+                jugador.restarVida();
+        }else if(movil instanceof Asteroide){
+            movil.matar();
+            jugador.bloquear(MS_BLOQUEO_ASTEROIDE);
+        } else if (movil instanceof Quaffle){
+            movil.matar();
+            puntaje += PUNTOS_QUAFFLE;
+        } else if (movil instanceof Snitch){
+            movil.matar();
+            puntaje += PUNTOS_SNITCH;
+            destruirEnemigosVisibles(); 
+                    
+        }
+    }
+    
+    private void destruirEnemigosVisibles(){
+        Movil[]copia = escena.instantanea();
+        for (Movil movil : copia){
+            if(movil instanceof Enemigo && movil.estaVivo()) {
+                movil.matar();
+            }
         }
     }
     /* AABB: caja contra caja. son cuatro comparaciones y las cuatro
-hacen falta (el error tipico es comparar solo x, y entonces detecta
-colisiones aunque esten en alturas distintas)
+hacen falta.
 */
      public static boolean chocan(Movil a, Movil b){
          return a.getX() < b.getX() +b.getAncho()

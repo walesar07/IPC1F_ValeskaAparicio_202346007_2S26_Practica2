@@ -3,7 +3,7 @@ package com.mycompany.practica2.views;
 
 import com.mycompany.practica2.controllers.Arbitro;
 import com.mycompany.practica2.controllers.ControlTeclado;
-import com.mycompany.practica2.controllers.HiloGeneradorEnemigos;
+import com.mycompany.practica2.controllers.HiloGeneradorObjetos;
 import com.mycompany.practica2.controllers.HiloMovimientoJugador;
 import com.mycompany.practica2.models.Escena;
 import com.mycompany.practica2.models.NaveJugador;
@@ -19,7 +19,7 @@ public class VentanaJuego extends JFrame{
     private static final int ALTO_PANTALLA = 500;
     
     private final HiloMovimientoJugador hiloMovimiento;
-    private final HiloGeneradorEnemigos hiloGenerador;
+    private final HiloGeneradorObjetos hiloGenerador;
     private final Arbitro arbitro;
     
     public VentanaJuego(Piloto piloto){
@@ -40,16 +40,34 @@ public class VentanaJuego extends JFrame{
         pack();//ajusta el tamano de la ventana al referredSize del panel
         setLocationRelativeTo(null);
         
-        //el panel necesita el foco para poder recibir eventos de teclado
-        panel.requestFocusInWindow();
-        
         hiloMovimiento = new HiloMovimientoJugador(nave, teclado, panel);
-        hiloGenerador = new HiloGeneradorEnemigos(escena, ANCHO_PANTALLA,
+        hiloGenerador = new HiloGeneradorObjetos(escena, ANCHO_PANTALLA,
         ALTO_PANTALLA);
         
         hiloMovimiento.start();
         hiloGenerador.start();
         arbitro.start();
+        
+        /*timer de swing (corre en el EDT, seguro para tocar la UI):
+        revisa cada 200 ms si la nave ya se quedo sin vidas, y si es asi
+        detiene todos los hilos de la partida y avisa al jugador.
+        */
+        
+        Timer verificadorGameOver = new Timer(200, null);
+        verificadorGameOver.addActionListener(e-> {
+            if (!nave.estaVivo()){
+                verificadorGameOver.stop();
+                hiloMovimiento.detener();
+                hiloGenerador.detener();
+                arbitro.detener();
+                
+                JOptionPane.showMessageDialog(this,
+                        "¡Nave destruida! Game over.\nPuntaje final: " + arbitro.getPuntaje(),
+                        "Fin de la partida", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            }
+        });
+        verificadorGameOver.start();
         
   
         
