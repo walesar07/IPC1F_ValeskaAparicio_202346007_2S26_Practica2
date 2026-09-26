@@ -1,4 +1,5 @@
 com\mycompany\practica2\controllers\ControlTeclado.class
+com\mycompany\practica2\views\VentanaEliminarPiloto.class
 com\mycompany\practica2\models\Proyectil.class
 com\mycompany\practica2\views\VentanaJuego.class
 com\mycompany\practica2\models\NivelDificultad.class
@@ -15,8 +16,10 @@ com\mycompany\practica2\views\VentanaJuego$1.class
 com\mycompany\practica2\controllers\HistorialPartidas.class
 com\mycompany\practica2\views\VentanaCrearPiloto.class
 com\mycompany\practica2\models\Asteroide.class
+com\mycompany\practica2\controllers\GestorPersistencia.class
 com\mycompany\practica2\views\MenuPrincipal.class
 com\mycompany\practica2\controllers\Arbitro.class
+com\mycompany\practica2\views\MenuPrincipal$1.class
 com\mycompany\practica2\models\Partida.class
 com\mycompany\practica2\controllers\HiloMovimientoJugador.class
 com\mycompany\practica2\controllers\HiloProyectil.class

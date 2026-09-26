@@ -10,6 +10,7 @@ public class Arbitro extends Thread {
     private static final int PUNTOS_QUAFFLE = 10;
     private static final int PUNTOS_SNITCH = 150;
     private static final int PUNTOS_ENEMIGO_DESTRUIDO = 5;
+    private static final int PENALIZACION_ENEMIGO_ESCAPADO = 1;
     
     private final Escena escena;
     private final NaveJugador jugador;
@@ -37,6 +38,7 @@ public class Arbitro extends Thread {
             
             revisarColisionesJugador(copia);
             revisarColisionesProyectiles(copia);
+            revisarEnemigosEscapados(copia);
             
             escena.limpiarMuertos();
             
@@ -84,6 +86,26 @@ public class Arbitro extends Thread {
             }
         }
     }
+     
+        /*
+     Revisa si algún Enemigo salió de la pantalla sin ser destruido
+     (HiloMovimientoHorizontal ya lo marcó con marcarEscape() antes
+     de matarlo) y resta 1 punto por cada uno. Como el objeto se
+     elimina de la Escena justo después (limpiarMuertos()), no hay
+     riesgo de contarlo dos veces en la siguiente vuelta del ciclo.
+     */
+    private void revisarEnemigosEscapados(Movil[] copia) {
+        for (Movil movil : copia) {
+            if (movil instanceof Enemigo) {
+                Enemigo enemigo = (Enemigo) movil;
+                if (!enemigo.estaVivo() && enemigo.escapo()) {
+                    puntaje = Math.max(0, puntaje - PENALIZACION_ENEMIGO_ESCAPADO);
+                }
+            }
+        }
+    } 
+     
+     
     
     /*define que pasa cuando el jugador choca contra un movil, enemigo,
     asteroide(bludger), Quaffle y Snitch con sus propias reglas.

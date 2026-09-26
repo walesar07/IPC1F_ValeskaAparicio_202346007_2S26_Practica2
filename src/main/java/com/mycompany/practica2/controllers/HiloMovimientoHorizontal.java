@@ -1,6 +1,7 @@
 
 package com.mycompany.practica2.controllers;
 
+import com.mycompany.practica2.models.Enemigo;
 import com.mycompany.practica2.models.MovilHorizontal;
 
 public class HiloMovimientoHorizontal extends Thread {
@@ -20,7 +21,13 @@ public class HiloMovimientoHorizontal extends Thread {
             movil.trasladar(-movil.getVelocidad(), 0);
             
             if(movil.getX() + movil.getAncho()<0){
-                movil.matar();//salio de la pantalla por la izquierda
+                //si es un enemigo, se marca como "escapado" antes de 
+                //matarlo, para que el Arbitro sepa que salio de la 
+                //pantalla sin ser destruido (y aplique la penalizacion -1pt)
+                if (movil instanceof Enemigo){
+                    ((Enemigo) movil).marcarEscape();
+                }
+                movil.matar();
                 
             }
             

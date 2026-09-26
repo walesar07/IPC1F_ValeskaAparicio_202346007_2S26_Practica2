@@ -1,0 +1,4 @@
+Valeska;FACIL;188
+Valeska;FACIL;190
+Valeska2;NORMAL;319
+Valeska3;DIFICIL;298

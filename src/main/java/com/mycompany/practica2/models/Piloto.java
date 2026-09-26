@@ -8,9 +8,18 @@ public class Piloto {
     private int mejorPuntaje;
 
     public Piloto(String nombre, NivelDificultad nivel) {
+        this(nombre, nivel,0);
+    }
+    
+    /*constructor usado internamente por RegistroPilotos.cargar() para
+    reconstruir un piloto ya existente (con su mejor puntaje previo)
+    al leerlo desde el archivo de texto guardado en una ejecucion
+    anterior.
+    */
+    public Piloto(String nombre, NivelDificultad nivel, int mejorPuntaje){
         this.nombre = nombre;
         this.nivel = nivel;
-        this.mejorPuntaje = 0;//todo piloto nuevo empieza sin puntaje
+        this.mejorPuntaje = mejorPuntaje;
     }
 
     public String getNombre() {
