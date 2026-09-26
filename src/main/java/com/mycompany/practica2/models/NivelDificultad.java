@@ -9,13 +9,13 @@ public enum NivelDificultad {
     DIFICIL("Acorazado", 2, 300, "Velocidad baja/ Disparo rapido (rafagas cada 0.3 seg)");
     
     private final String nombreNave;
-    private final int velocidad; //pixeles por paso de movimiento
+    private final int intervaloMovimientoMs;//Ms de Thred.sleep en el hilo de movimiento.
     private final int cadenciaDisparoMs;//milisegundos entre disparos (para Thread.sleep)
     private final String descripcion;
 
-    private NivelDificultad(String nombreNave, int velocidad, int cadenciaDisparoMs, String descripcion) {
+    private NivelDificultad(String nombreNave, int intervaloMovimientoMs, int cadenciaDisparoMs, String descripcion) {
         this.nombreNave = nombreNave;
-        this.velocidad = velocidad;
+        this.intervaloMovimientoMs = intervaloMovimientoMs;
         this.cadenciaDisparoMs = cadenciaDisparoMs;
         this.descripcion = descripcion;
     }
@@ -24,8 +24,8 @@ public enum NivelDificultad {
         return nombreNave;
     }
 
-    public int getVelocidad() {
-        return velocidad;
+    public int getIntervaloMovimientoMs() {
+        return intervaloMovimientoMs;
     }
 
     public int getCadenciaDisparoMs() {

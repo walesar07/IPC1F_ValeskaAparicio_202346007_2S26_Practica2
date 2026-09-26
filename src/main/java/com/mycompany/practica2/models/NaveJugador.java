@@ -20,16 +20,9 @@ public class NaveJugador extends Movil {
     
     public NivelDificultad getNivel(){
         return nivel;
+       
     }
     
-    /* cuantos pixeles se mueve por cada actualizacion del hilo 
-    de movimiento. Viene directamente del nivel de dificultad 
-    elegido al crear al piloto.
-    */
-    public int getVelocidad(){
-        return nivel.getVelocidad();
-        
-    }
     public int getVidas(){
          return vidas;
     }

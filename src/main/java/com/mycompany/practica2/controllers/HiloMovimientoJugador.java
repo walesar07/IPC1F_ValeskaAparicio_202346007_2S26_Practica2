@@ -7,7 +7,7 @@ import com.mycompany.practica2.views.PanelJuego;
 
 public class HiloMovimientoJugador extends Thread {
     
-    private static final int INTERVALO_MS = 15; //-60 actualizaciones por segundo
+    private static final int PASO_PIXELES = 5; //pixeles por actualizacion, igual para los 3 niveles.
     
     private final NaveJugador nave;
     private final ControlTeclado teclado;
@@ -33,7 +33,7 @@ public class HiloMovimientoJugador extends Thread {
             panel.repaint();//repaint() es seguro de llamar desde cualquier hilo
             
             try {
-                Thread.sleep(INTERVALO_MS);
+                Thread.sleep(nave.getNivel().getIntervaloMovimientoMs());
             }catch(InterruptedException e){
                 activo = false;
             }
@@ -45,14 +45,13 @@ public class HiloMovimientoJugador extends Thread {
             return;//mientras esta bloqueada, no responde al teclado
         }
         
-        int velocidad = nave.getVelocidad();
         int nuevoX = nave.getX();
         int nuevoY = nave.getY();
         
-        if (teclado.isArriba()) nuevoY -= velocidad;
-        if (teclado.isAbajo()) nuevoY += velocidad;
-        if (teclado.isIzquierda()) nuevoX -= velocidad;
-        if (teclado.isDerecha()) nuevoX += velocidad;
+        if (teclado.isArriba()) nuevoY -= PASO_PIXELES;
+        if (teclado.isAbajo()) nuevoY += PASO_PIXELES;
+        if (teclado.isIzquierda()) nuevoX -= PASO_PIXELES;
+        if (teclado.isDerecha()) nuevoX += PASO_PIXELES;
         
         //evitar que la nave se salga de los limites visibles del panel
         int limiteX = panel.getWidth() - nave.getAncho();
