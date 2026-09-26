@@ -6,8 +6,10 @@ import com.mycompany.practica2.controllers.ControlTeclado;
 import com.mycompany.practica2.controllers.HiloDisparo;
 import com.mycompany.practica2.controllers.HiloGeneradorObjetos;
 import com.mycompany.practica2.controllers.HiloMovimientoJugador;
+import com.mycompany.practica2.controllers.HistorialPartidas;
 import com.mycompany.practica2.models.Escena;
 import com.mycompany.practica2.models.NaveJugador;
+import com.mycompany.practica2.models.Partida;
 import com.mycompany.practica2.models.Piloto;
 
 import javax.swing.*;
@@ -24,7 +26,7 @@ public class VentanaJuego extends JFrame{
     private final HiloDisparo hiloDisparo;
     private final Arbitro arbitro;
     
-    public VentanaJuego(Piloto piloto){
+    public VentanaJuego(Piloto piloto, HistorialPartidas historial){
         setTitle("Partida - " + piloto.getNombre());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -65,6 +67,11 @@ public class VentanaJuego extends JFrame{
                 hiloGenerador.detener();
                 hiloDisparo.detener();
                 arbitro.detener();
+                
+                int puntajeFinal = arbitro.getPuntaje();
+                piloto.registrarPuntaje(puntajeFinal);
+                historial.registrarPartida(new Partida(piloto.getNombre(),
+                piloto.getNivel(), puntajeFinal));
                 
                 JOptionPane.showMessageDialog(this,
                         "¡Nave destruida! Game over.\nPuntaje final: " + arbitro.getPuntaje(),

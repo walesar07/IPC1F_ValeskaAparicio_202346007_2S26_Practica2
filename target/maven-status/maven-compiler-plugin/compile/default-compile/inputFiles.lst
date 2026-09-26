@@ -5,6 +5,7 @@ C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HiloGen
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HiloMovimientoHorizontal.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HiloMovimientoJugador.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HiloProyectil.java
+C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HistorialPartidas.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\RegistroPilotos.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Asteroide.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Enemigo.java
@@ -13,6 +14,7 @@ C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Movil.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\MovilHorizontal.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\NaveJugador.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\NivelDificultad.java
+C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Partida.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Piloto.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Proyectil.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Quaffle.java
@@ -22,3 +24,4 @@ C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\views\MenuPrincipal
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\views\PanelJuego.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\views\VentanaCrearPiloto.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\views\VentanaJuego.java
+C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\views\VentanaTopPuntajes.java

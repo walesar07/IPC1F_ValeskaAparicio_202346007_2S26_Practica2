@@ -1,6 +1,7 @@
 
 package com.mycompany.practica2.views;
 
+import com.mycompany.practica2.controllers.HistorialPartidas;
 import com.mycompany.practica2.controllers.RegistroPilotos;
 import com.mycompany.practica2.models.Piloto;
 
@@ -13,6 +14,7 @@ public class MenuPrincipal extends JFrame {
     top de puntajes,etc) para que todas trabajen sobre el mismo vector.
     */
     private RegistroPilotos registroPilotos = new RegistroPilotos();
+    private HistorialPartidas historialPartidas = new HistorialPartidas ();
     
     public MenuPrincipal(){
         //Configuracion basica de la ventana
@@ -46,10 +48,14 @@ public class MenuPrincipal extends JFrame {
                         + "crear un piloto", "Sin pilotos", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            //por ahora usamos el primer piloto registrado; en una fase 
-            //posterior agregaremos un selector si hay varios.
-            Piloto pilotoSeleccionado = pilotos[0];
-            VentanaJuego ventanaJuego = new VentanaJuego(pilotoSeleccionado);
+            //ahora usamos el primer piloto registrado; 
+            //aparece un selector si hay varios.
+            Piloto pilotoSeleccionado = seleccionarPiloto(pilotos);
+            if (pilotoSeleccionado == null){
+                return; // el usuario cerro el selector sin elegir
+                
+            }
+            VentanaJuego ventanaJuego = new VentanaJuego(pilotoSeleccionado, historialPartidas);
             ventanaJuego.setVisible(true);
         });
         
@@ -59,9 +65,8 @@ public class MenuPrincipal extends JFrame {
         });
  
         btnTopPuntajes.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this,
-                "Aquí mostraremos el top de puntajes guardado en el vector\n" +
-                "(se implementa junto con la persistencia).");
+            VentanaTopPuntajes ventana = new VentanaTopPuntajes(this, historialPartidas);
+            ventana.setVisible(true);
         });
  
         btnSalir.addActionListener(e -> {
@@ -86,10 +91,30 @@ public class MenuPrincipal extends JFrame {
  
         add(panelPrincipal);
     }
+    
+    /* si solo hay un piloto registrado, lo usa directamente. Si hay
+    varios, muestra un selector para que el jugador elija con cual quiere
+    jugar (por defecto, sugiere el mas reciente).
+    */
+    private Piloto seleccionarPiloto(Piloto[] pilotos){
+        if(pilotos.length == 1){
+            return pilotos[0];
+        }
+        return (Piloto) JOptionPane.showInputDialog(
+        this,
+                "Selecciona con que piloto quieres jugar: ",
+                "Elegir piloto",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                pilotos,
+                pilotos[pilotos.length - 1]
+        );
+    }
+    
  
-    /**
-     * Método auxiliar para no repetir código (principio DRY) al crear
-     * cada botón con el mismo estilo.
+    /*
+      Método auxiliar para no repetir código (principio DRY) al crear
+      cada botón con el mismo estilo.
      */
     private JButton crearBoton(String texto) {
         JButton boton = new JButton(texto);
