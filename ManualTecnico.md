@@ -60,16 +60,3 @@ Se usan arreglos para almacenar pilotos, historial y objetos activos, con crecim
 
 ## 6. Librerías externas
 * **JFreeChart** (`org.jfree:jfreechart`, vía Maven en `pom.xml`) para generar la gráfica de barras del Top de Puntajes.
-
-## 7. Diagrama de Flujo del Sistema
-
-```mermaid
-graph TD;
-    A[Menú Principal] --> B[Crear Piloto]
-    A --> C[Eliminar Piloto]
-    A --> D[Top de Puntajes]
-    A --> E[Jugar Partida]
-    E --> F[Inicializar Hilos y Escena]
-    F --> G[Arbitro: Control de Colisiones e Hilos]
-    G --> H[Fin de Partida / Game Over]
-    H --> I[Guardar Historial en Datos]
