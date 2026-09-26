@@ -10,6 +10,7 @@ public class ControlTeclado implements KeyListener {
     private volatile boolean abajo;
     private volatile boolean izquierda;
     private volatile boolean derecha;
+    private volatile boolean disparar;
     
     @Override
     public void keyPressed(KeyEvent e){
@@ -38,6 +39,9 @@ public class ControlTeclado implements KeyListener {
            case KeyEvent.VK_RIGHT:
                derecha = presionada;
                break;
+           case KeyEvent.VK_SPACE:
+               disparar = presionada;
+               break;
            default:
                break;
        }
@@ -58,6 +62,10 @@ public class ControlTeclado implements KeyListener {
    
    public boolean isDerecha(){
        return derecha;
+   }
+   
+   public boolean isDisparar(){
+       return disparar;
    }
     
 }

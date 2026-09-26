@@ -1,8 +1,10 @@
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\Arbitro.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\ControlTeclado.java
+C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HiloDisparo.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HiloGeneradorObjetos.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HiloMovimientoHorizontal.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HiloMovimientoJugador.java
+C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\HiloProyectil.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\controllers\RegistroPilotos.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Asteroide.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Enemigo.java
@@ -12,6 +14,7 @@ C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\MovilHorizon
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\NaveJugador.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\NivelDificultad.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Piloto.java
+C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Proyectil.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Quaffle.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\models\Snitch.java
 C:\Proyectos\Practica2\src\main\java\com\mycompany\practica2\Practica2.java

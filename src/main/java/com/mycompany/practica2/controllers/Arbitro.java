@@ -9,6 +9,7 @@ public class Arbitro extends Thread {
     private static final int MS_BLOQUEO_ASTEROIDE = 2000;
     private static final int PUNTOS_QUAFFLE = 10;
     private static final int PUNTOS_SNITCH = 150;
+    private static final int PUNTOS_ENEMIGO_DESTRUIDO = 5;
     
     private final Escena escena;
     private final NaveJugador jugador;
@@ -34,17 +35,52 @@ public class Arbitro extends Thread {
         while(activo){
             Movil[] copia = escena.instantanea();
             
-            for(Movil movil : copia){
-                if(movil.estaVivo() && chocan(jugador, movil)){
-                    resolver(movil);
-                }
-            }
+            revisarColisionesJugador(copia);
+            revisarColisionesProyectiles(copia);
+            
             escena.limpiarMuertos();
             
             try{
                 Thread.sleep(INTERVALO_MS);
             }catch(InterruptedException e){
                 activo = false;
+            }
+        }
+    }
+    /*COLISIONES ENTRE LA NAVE DEL JUGADOR Y CUALQUIER OBJETO QUE NO
+    SEA UN PROYECTIL (LOS PROYECTILES SON DEL PROPIO JUGADOR, NOLE 
+    HACEN DA;O A SU NAVE).
+    */
+    private void revisarColisionesJugador(Movil[] copia){
+        for(Movil movil : copia){
+                if (movil instanceof Proyectil){
+                    continue;
+                }
+                if(movil.estaVivo() && chocan(jugador, movil)){
+                    resolver(movil);
+                }
+            }
+    }
+    
+    /* colisiones entre cada proyectil vivo y cada enemigo vivo.
+    un mismo proyectil solo puede destuir un enemigo(break al encontrar
+    el primero).
+    */
+     private void revisarColisionesProyectiles(Movil[] copia) {
+        for (Movil posibleProyectil : copia) {
+            if (!(posibleProyectil instanceof Proyectil) || !posibleProyectil.estaVivo()) {
+                continue;
+            }
+            for (Movil posibleEnemigo : copia) {
+                if (!(posibleEnemigo instanceof Enemigo) || !posibleEnemigo.estaVivo()) {
+                    continue;
+                }
+                if (chocan(posibleProyectil, posibleEnemigo)) {
+                    posibleProyectil.matar();
+                    posibleEnemigo.matar();
+                    puntaje += PUNTOS_ENEMIGO_DESTRUIDO;
+                    break;
+                }
             }
         }
     }

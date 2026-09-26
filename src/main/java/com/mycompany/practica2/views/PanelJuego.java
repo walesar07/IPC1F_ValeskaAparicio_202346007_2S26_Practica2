@@ -47,6 +47,7 @@ public class PanelJuego extends JPanel {
         if (movil instanceof Asteroide) return Color.GRAY;
         if (movil instanceof Quaffle) return Color.YELLOW;
         if (movil instanceof Snitch) return Color.ORANGE;
+        if (movil instanceof Proyectil) return Color.GREEN;
         return Color.MAGENTA; // no debería pasar, pero por si acaso
     }
  

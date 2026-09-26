@@ -3,6 +3,7 @@ package com.mycompany.practica2.views;
 
 import com.mycompany.practica2.controllers.Arbitro;
 import com.mycompany.practica2.controllers.ControlTeclado;
+import com.mycompany.practica2.controllers.HiloDisparo;
 import com.mycompany.practica2.controllers.HiloGeneradorObjetos;
 import com.mycompany.practica2.controllers.HiloMovimientoJugador;
 import com.mycompany.practica2.models.Escena;
@@ -20,6 +21,7 @@ public class VentanaJuego extends JFrame{
     
     private final HiloMovimientoJugador hiloMovimiento;
     private final HiloGeneradorObjetos hiloGenerador;
+    private final HiloDisparo hiloDisparo;
     private final Arbitro arbitro;
     
     public VentanaJuego(Piloto piloto){
@@ -43,9 +45,11 @@ public class VentanaJuego extends JFrame{
         hiloMovimiento = new HiloMovimientoJugador(nave, teclado, panel);
         hiloGenerador = new HiloGeneradorObjetos(escena, ANCHO_PANTALLA,
         ALTO_PANTALLA);
+        hiloDisparo = new HiloDisparo(nave, teclado, escena, ANCHO_PANTALLA);
         
         hiloMovimiento.start();
         hiloGenerador.start();
+        hiloDisparo.start();
         arbitro.start();
         
         /*timer de swing (corre en el EDT, seguro para tocar la UI):
@@ -59,6 +63,7 @@ public class VentanaJuego extends JFrame{
                 verificadorGameOver.stop();
                 hiloMovimiento.detener();
                 hiloGenerador.detener();
+                hiloDisparo.detener();
                 arbitro.detener();
                 
                 JOptionPane.showMessageDialog(this,
@@ -88,6 +93,7 @@ public class VentanaJuego extends JFrame{
                 //para no dejarlo corriendo en segundo plano.     
                 hiloMovimiento.detener();
                 hiloGenerador.detener();
+                hiloDisparo.detener();
                 arbitro.detener();
             }
         });              
