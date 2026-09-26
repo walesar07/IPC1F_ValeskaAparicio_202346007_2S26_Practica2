@@ -23,6 +23,7 @@ com\mycompany\practica2\controllers\HiloProyectil.class
 com\mycompany\practica2\controllers\HiloDisparo.class
 com\mycompany\practica2\models\Escena.class
 com\mycompany\practica2\models\Snitch.class
+com\mycompany\practica2\controllers\GeneradorReporte.class
 com\mycompany\practica2\models\NaveJugador.class
 com\mycompany\practica2\models\Enemigo.class
 com\mycompany\practica2\models\Piloto.class
