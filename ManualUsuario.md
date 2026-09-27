@@ -22,6 +22,9 @@ Ejecuta la clase `Main`. Se abrirá el **Menú Principal** con 5 opciones:
 - **Eliminar Piloto**
 - **Top de Puntajes**
 - **Salir**
+  
+  <img width="475" height="480" alt="image" src="https://github.com/user-attachments/assets/227dcf1b-ec58-4090-ba6a-b4316db55501" />
+
 
 ## 4. Crear un piloto
 
@@ -39,11 +42,17 @@ Ejecuta la clase `Main`. Se abrirá el **Menú Principal** con 5 opciones:
 4. Haz clic en **Registrar Piloto**. Si hay un error (nombre vacío,
    repetido o muy corto), se mostrará un mensaje explicando por qué.
 
+   <img width="627" height="386" alt="image" src="https://github.com/user-attachments/assets/575bd296-4d67-4043-98a9-5f814b888099" />
+
+
 ## 5. Eliminar un piloto
 
 1. Haz clic en **Eliminar Piloto**.
 2. Selecciona el piloto en la lista desplegable.
 3. Confirma la eliminación. Esta acción no se puede deshacer.
+
+   <img width="428" height="226" alt="image" src="https://github.com/user-attachments/assets/a22cda85-926d-4ba5-8bde-8809518e7b44" />
+
 
 ## 6. Jugar una partida
 
@@ -53,6 +62,9 @@ Ejecuta la clase `Main`. Se abrirá el **Menú Principal** con 5 opciones:
    - **Flechas del teclado**: mover la nave (arriba, abajo, izquierda, derecha).
    - **Barra espaciadora**: disparar (mantenla presionada para disparar de
      forma continua, respetando la cadencia de tu nave).
+
+     <img width="993" height="637" alt="image" src="https://github.com/user-attachments/assets/88a7d24d-3986-40a8-8c64-38e9ed7f9967" />
+
 
 ### Objetos en el campo de batalla
 
@@ -72,11 +84,18 @@ La partida termina cuando pierdes tus 3 vidas ("game over"). Se mostrará tu
 puntaje final, y este se guarda automáticamente en tu historial y, si es tu
 mejor marca, se actualiza tu mejor puntaje.
 
+<img width="988" height="661" alt="image" src="https://github.com/user-attachments/assets/c8c60bad-da91-49b6-b942-4ced36da9aaa" />
+
+
 ## 7. Top de Puntajes
 
 Desde el menú principal, haz clic en **Top de Puntajes** para ver las
 mejores partidas jugadas (piloto, nave usada y puntaje), ordenadas de mayor
 a menor.
+
+<img width="577" height="543" alt="image" src="https://github.com/user-attachments/assets/43984cb5-132c-4f91-9d7a-e2a96b8c1bde" />
+
+
 
 ### Generar el reporte
 
@@ -85,6 +104,10 @@ Dentro de la ventana de Top de Puntajes, haz clic en **Generar Reporte
 una gráfica de barras y una tabla de resultados, y abre el reporte
 automáticamente en tu navegador. Desde ahí, puedes usar
 **Imprimir → Guardar como PDF** para obtener el PDF final.
+
+<img width="576" height="223" alt="image" src="https://github.com/user-attachments/assets/735e86c8-ee6d-4592-a97d-6b02a31d3069" />
+
+
 
 ## 8. Salir del programa
 
