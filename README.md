@@ -16,6 +16,6 @@ y proyectil en pantalla es manejado por su propio hilo independiente.
 
 ## Documentación
 
-- [Manual Técnico](./MANUAL_TECNICO.md)
-- [Manual de Usuario](./MANUAL_USUARIO.md)
-- [Diagrama de Flujo](./DIAGRAMA_FLUJO.md)
+- [Manual Técnico](./ManualTecnico.md)
+- [Manual de Usuario](./ManualUsuario.md)
+- [Diagrama de Flujo](./DiagramaDeFlujo.md)
