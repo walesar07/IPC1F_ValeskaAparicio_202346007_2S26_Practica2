@@ -7,6 +7,7 @@ import com.mycompany.practica2.controllers.HiloDisparo;
 import com.mycompany.practica2.controllers.HiloGeneradorObjetos;
 import com.mycompany.practica2.controllers.HiloMovimientoJugador;
 import com.mycompany.practica2.controllers.HistorialPartidas;
+import com.mycompany.practica2.controllers.RegistroPilotos;
 import com.mycompany.practica2.models.Escena;
 import com.mycompany.practica2.models.NaveJugador;
 import com.mycompany.practica2.models.Partida;
@@ -15,6 +16,7 @@ import com.mycompany.practica2.models.Piloto;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class VentanaJuego extends JFrame{
     
@@ -26,7 +28,7 @@ public class VentanaJuego extends JFrame{
     private final HiloDisparo hiloDisparo;
     private final Arbitro arbitro;
     
-    public VentanaJuego(Piloto piloto, HistorialPartidas historial){
+    public VentanaJuego(Piloto piloto, HistorialPartidas historial, RegistroPilotos registroPilotos){
         setTitle("Partida - " + piloto.getNombre());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -72,7 +74,7 @@ public class VentanaJuego extends JFrame{
                 piloto.registrarPuntaje(puntajeFinal);
                 historial.registrarPartida(new Partida(piloto.getNombre(),
                 piloto.getNivel(), puntajeFinal));
-                
+                guardarInmediatamente(registroPilotos, historial);
                 JOptionPane.showMessageDialog(this,
                         "¡Nave destruida! Game over.\nPuntaje final: " + arbitro.getPuntaje(),
                         "Fin de la partida", JOptionPane.INFORMATION_MESSAGE);
@@ -105,6 +107,24 @@ public class VentanaJuego extends JFrame{
             }
         });              
         
+    }
+    
+        /**
+     * Guarda pilotos e historial en disco justo al terminar la
+     * partida, en vez de esperar a que el programa se cierre
+     * correctamente. Así, si el programa se cierra de forma abrupta
+     * (por ejemplo, con el botón "Stop" de NetBeans) o hay más de una
+     * instancia corriendo, el resultado de esta partida no se pierde.
+     */
+    private void guardarInmediatamente(RegistroPilotos registroPilotos, HistorialPartidas historial) {
+        try {
+            registroPilotos.guardar();
+            historial.guardar();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this,
+                "La partida terminó, pero no se pudo guardar en disco:\n" + ex.getMessage(),
+                "Error al guardar", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     

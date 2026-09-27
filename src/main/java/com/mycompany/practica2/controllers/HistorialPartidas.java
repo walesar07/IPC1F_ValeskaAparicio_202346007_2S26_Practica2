@@ -79,6 +79,58 @@ public class HistorialPartidas {
         }
         return top;
     }
+    
+        /**
+     * Elimina del historial TODAS las partidas asociadas a ese piloto
+     * (a diferencia de RegistroPilotos.eliminarPiloto, que borra un
+     * único registro, aquí puede haber varias partidas jugadas con el
+     * mismo nombre). Se usa cuando se elimina un piloto desde
+     * VentanaEliminarPiloto, para que el Top de Puntajes y el reporte
+     * no sigan mostrando resultados de pilotos que ya no existen.
+     */
+    public void eliminarPartidasDePiloto(String nombrePiloto) {
+        int nuevaCantidad = 0;
+        for (int i = 0; i < cantidad; i++) {
+            if (!partidas[i].getNombrePiloto().equalsIgnoreCase(nombrePiloto)) {
+                partidas[nuevaCantidad] = partidas[i];
+                nuevaCantidad++;
+            }
+        }
+        for (int i = nuevaCantidad; i < cantidad; i++) {
+            partidas[i] = null;
+        }
+        cantidad = nuevaCantidad;
+    }
+     /**
+     * Elimina del historial cualquier partida cuyo piloto YA NO esté
+     * en la lista de nombres válidos que se le pasa. Se usa al cargar
+     * el programa, comparando contra los pilotos actualmente
+     * registrados, para depurar automáticamente entradas "huérfanas"
+     * que hayan quedado de pilotos perdidos (por ejemplo, si en algún
+     * momento se perdió el archivo de pilotos pero no el de historial).
+     */
+    public void eliminarPartidasHuerfanas(String[] nombresValidos) {
+        int nuevaCantidad = 0;
+        for (int i = 0; i < cantidad; i++) {
+            if (existeEnLista(partidas[i].getNombrePiloto(), nombresValidos)) {
+                partidas[nuevaCantidad] = partidas[i];
+                nuevaCantidad++;
+            }
+        }
+        for (int i = nuevaCantidad; i < cantidad; i++) {
+            partidas[i] = null;
+        }
+        cantidad = nuevaCantidad;
+    }
+ 
+    private boolean existeEnLista(String nombre, String[] nombresValidos) {
+        for (int i = 0; i < nombresValidos.length; i++) {
+            if (nombresValidos[i].equalsIgnoreCase(nombre)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     /*

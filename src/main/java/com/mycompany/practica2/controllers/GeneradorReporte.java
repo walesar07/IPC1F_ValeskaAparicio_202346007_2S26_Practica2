@@ -18,7 +18,8 @@ import java.io.PrintWriter;
 
 public class GeneradorReporte {
     
-    private static final int ANCHO_GRAFICA = 600;
+    private static final int ANCHO_POR_BARRA = 120;
+    private static final int ANCHO_MINIMO_GRAFICA = 500;
     private static final int ALTO_GRAFICA = 400;
     private static final String NOMBRE_IMAGEN = "top_puntajes.png";
     private static final String NOMBRE_HTML = "reporte_top_puntajes.html";
@@ -33,14 +34,24 @@ public class GeneradorReporte {
         if (!carpetaDestino.exists()) {
             carpetaDestino.mkdirs();
         }
+        
+        int anchoGrafica = calcularAnchoGrafica(top.length);
  
         File archivoImagen = new File(carpetaDestino, NOMBRE_IMAGEN);
-        generarGrafica(top, archivoImagen);
+        generarGrafica(top, archivoImagen, anchoGrafica);
  
         File archivoHtml = new File(carpetaDestino, NOMBRE_HTML);
-        generarHtml(top, archivoHtml);
+        generarHtml(top, archivoHtml, anchoGrafica);
  
         return archivoHtml.getAbsolutePath();
+    }
+        /**
+     * Calcula el ancho de la gráfica según cuántas barras tenga, para
+     * que las etiquetas (nombre + nave) no se amontonen cuando hay
+     * varios pilotos en el top.
+     */
+    private int calcularAnchoGrafica(int cantidadBarras) {
+        return Math.max(ANCHO_MINIMO_GRAFICA, cantidadBarras * ANCHO_POR_BARRA);
     }
  
     /*
@@ -48,15 +59,19 @@ public class GeneradorReporte {
       JFreeChart y la guarda como imagen PNG (vía ImageIO, por debajo
       de ChartUtils.saveChartAsPNG).
      */
-    private void generarGrafica(Partida[] top, File archivoImagen) throws IOException {
+    private void generarGrafica(Partida[] top, File archivoImagen, int anchoGrafica) throws IOException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
  
         for (int i = 0; i < top.length; i++) {
             Partida partida = top[i];
-            String etiqueta = partida.getNombrePiloto() + " (" + partida.getNivel().getNombreNave() + ")";
+            // Se antepone la posición del ranking (1., 2., 3.…) para que la
+            // etiqueta sea única incluso si el mismo piloto aparece más de
+            // una vez en el top; sin esto, JFreeChart trata dos categorías
+            // con el mismo texto como una sola barra y sobrescribe el valor.
+            String etiqueta = (i + 1) + ". " + partida.getNombrePiloto()
+                    + " (" + partida.getNivel().getNombreNave() + ")";
             dataset.addValue(partida.getPuntajeObtenido(), "Puntaje", etiqueta);
         }
- 
         JFreeChart grafica = ChartFactory.createBarChart(
                 "Top de Puntajes - Quetzal Space Defender",
                 "Piloto",
@@ -68,14 +83,14 @@ public class GeneradorReporte {
                 false  // urls
         );
  
-        ChartUtils.saveChartAsPNG(archivoImagen, grafica, ANCHO_GRAFICA, ALTO_GRAFICA);
+        ChartUtils.saveChartAsPNG(archivoImagen, grafica, anchoGrafica, ALTO_GRAFICA);
     }
  
     /*
       Arma el HTML del reporte: incrusta la imagen de la gráfica y
       agrega una tabla con el detalle de cada partida del top.
      */
-    private void generarHtml(Partida[] top, File archivoHtml) throws IOException {
+    private void generarHtml(Partida[] top, File archivoHtml, int anchoGrafica) throws IOException {
         try (PrintWriter escritor = new PrintWriter(new FileWriter(archivoHtml))) {
             escritor.println("<html>");
             escritor.println("<head>");
@@ -90,7 +105,7 @@ public class GeneradorReporte {
             escritor.println("</head>");
             escritor.println("<body>");
             escritor.println("<h1>Quetzal Space Defender - Reporte de Puntajes</h1>");
-            escritor.println("<img src='" + NOMBRE_IMAGEN + "' alt='Gráfica de puntajes' width='" + ANCHO_GRAFICA + "'>");
+            escritor.println("<img src='" + NOMBRE_IMAGEN + "' alt='Gráfica de puntajes' width='" + anchoGrafica + "'>");
  
             escritor.println("<table>");
             escritor.println("<tr><th>#</th><th>Piloto</th><th>Nave</th><th>Puntaje</th></tr>");

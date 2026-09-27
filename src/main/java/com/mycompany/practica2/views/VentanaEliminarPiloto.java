@@ -1,6 +1,7 @@
 
 package com.mycompany.practica2.views;
 
+import com.mycompany.practica2.controllers.HistorialPartidas;
 import com.mycompany.practica2.controllers.RegistroPilotos;
 import com.mycompany.practica2.models.Piloto;
  
@@ -10,7 +11,8 @@ import java.io.IOException;
 
 public class VentanaEliminarPiloto extends JDialog {
  
-    public VentanaEliminarPiloto(JFrame padre, RegistroPilotos registroPilotos) {
+    public VentanaEliminarPiloto(JFrame padre, RegistroPilotos registroPilotos,
+            HistorialPartidas historialPartidas) {
         super(padre, "Eliminar Piloto", true);
         setSize(360, 190);
         setLocationRelativeTo(padre);
@@ -35,7 +37,8 @@ public class VentanaEliminarPiloto extends JDialog {
  
         JButton botonEliminar = new JButton("Eliminar");
         botonEliminar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        botonEliminar.addActionListener(e -> eliminarSeleccionado(registroPilotos, combo));
+        botonEliminar.addActionListener(e -> eliminarSeleccionado(registroPilotos,
+                historialPartidas, combo));
  
         panel.add(etiqueta);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -46,7 +49,8 @@ public class VentanaEliminarPiloto extends JDialog {
         add(panel);
     }
  
-    private void eliminarSeleccionado(RegistroPilotos registroPilotos, JComboBox<Piloto> combo) {
+    private void eliminarSeleccionado(RegistroPilotos registroPilotos, 
+            HistorialPartidas historialPartidas, JComboBox<Piloto> combo) {
         Piloto seleccionado = (Piloto) combo.getSelectedItem();
         if (seleccionado == null) {
             return;
@@ -62,9 +66,11 @@ public class VentanaEliminarPiloto extends JDialog {
         }
  
         registroPilotos.eliminarPiloto(seleccionado.getNombre());
+        historialPartidas.eliminarPartidasDePiloto(seleccionado.getNombre());
  
         try {
             registroPilotos.guardar();
+            historialPartidas.guardar();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this,
                     "El piloto se eliminó de la lista, pero no se pudo actualizar el archivo:\n"
@@ -72,7 +78,7 @@ public class VentanaEliminarPiloto extends JDialog {
                     "Error al guardar", JOptionPane.ERROR_MESSAGE);
         }
  
-        JOptionPane.showMessageDialog(this, "Piloto eliminado.");
+        JOptionPane.showMessageDialog(this, "Piloto y su historial eliminado.");
         dispose();
     }
 }

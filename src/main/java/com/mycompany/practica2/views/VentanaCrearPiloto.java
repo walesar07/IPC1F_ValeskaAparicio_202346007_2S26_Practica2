@@ -5,6 +5,7 @@ import com.mycompany.practica2.controllers.RegistroPilotos;
 import com.mycompany.practica2.models.NivelDificultad;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class VentanaCrearPiloto extends JDialog{
     
@@ -78,14 +79,34 @@ public class VentanaCrearPiloto extends JDialog{
         String error = registroPilotos.registrarPiloto(nombre,nivelSeleccionado);
         
         if(error == null){
+            guardarInmediatamente();
             JOptionPane.showConfirmDialog(this, "Piloto registrado con exito!", "Exito",
-                    JOptionPane.OK_CANCEL_OPTION);
+                    JOptionPane.INFORMATION_MESSAGE);
             dispose();//cierra la ventana
             
         }else{
             JOptionPane.showMessageDialog(this, error, "Error de validacion",
                     JOptionPane.ERROR_MESSAGE);
         }
+    }
+        
+        
+    /**
+     * Guarda el archivo de pilotos justo después de registrar uno
+     * nuevo, en vez de esperar a que el programa se cierre
+     * correctamente. Así, si el programa se cierra de forma abrupta
+     * (por ejemplo, con el botón "Stop" de NetBeans) o hay más de una
+     * instancia corriendo, el piloto ya recién creado no se pierde.
+     */
+    private void guardarInmediatamente() {
+        try {
+            registroPilotos.guardar();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this,
+                "El piloto se registró, pero no se pudo guardar en disco:\n" + ex.getMessage(),
+                "Error al guardar", JOptionPane.ERROR_MESSAGE);
+        }
+    
         
     }
     private NivelDificultad obtenerNivelSeleccionado(){

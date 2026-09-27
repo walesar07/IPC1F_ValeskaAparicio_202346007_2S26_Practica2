@@ -62,7 +62,7 @@ public class MenuPrincipal extends JFrame {
                 return; // el usuario cerro el selector sin elegir
                 
             }
-            VentanaJuego ventanaJuego = new VentanaJuego(pilotoSeleccionado, historialPartidas);
+            VentanaJuego ventanaJuego = new VentanaJuego(pilotoSeleccionado, historialPartidas, registroPilotos);
             ventanaJuego.setVisible(true);
         });
         
@@ -72,7 +72,7 @@ public class MenuPrincipal extends JFrame {
         });
          
          btnEliminarPiloto.addActionListener(e -> {
-            VentanaEliminarPiloto ventana = new VentanaEliminarPiloto(this, registroPilotos);
+            VentanaEliminarPiloto ventana = new VentanaEliminarPiloto(this, registroPilotos, historialPartidas);
             ventana.setVisible(true);
         });
  
@@ -119,11 +119,37 @@ public class MenuPrincipal extends JFrame {
         try {
             registroPilotos.cargar();
             historialPartidas.cargar();
+            limpiarHistorialHuerfano();
         } catch (IOException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this,
                 "No se pudieron cargar los datos guardados anteriormente.\n"
                     + "Se continuará con listas vacías.",
                 "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+        /**
+     * Elimina del historial cualquier partida cuyo piloto ya no esté
+     * registrado (por ejemplo, si se perdió por algún problema de
+     * guardado en una ejecución anterior), y guarda el historial ya
+     * depurado. Se ejecuta automáticamente cada vez que se abre el
+     * programa.
+     */
+    private void limpiarHistorialHuerfano() {
+        Piloto[] pilotos = registroPilotos.getPilotos();
+        String[] nombresValidos = new String[pilotos.length];
+        for (int i = 0; i < pilotos.length; i++) {
+            nombresValidos[i] = pilotos[i].getNombre();
+        }
+ 
+        historialPartidas.eliminarPartidasHuerfanas(nombresValidos);
+ 
+        try {
+            historialPartidas.guardar();
+        } catch (IOException ex) {
+            // No es crítico: si falla aquí, se reintentará guardar
+            // igual la próxima vez que se registre una partida o se
+            // cierre el programa.
         }
     }
  
